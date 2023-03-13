@@ -325,12 +325,24 @@ namespace Project_Z
         {
 
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            //Application.Exit();
+            // Check if an instance of the login form is already open
+            login loginForm = Application.OpenForms.OfType<login>().FirstOrDefault();
 
-            new login().Show();
+            if (loginForm != null)
+            {
+                // If the login form is already open, bring it to the front
+                loginForm.BringToFront();
+            }
+            else
+            {
+                // If the login form is not open, create a new instance and show it
+                loginForm = new login();
+                loginForm.Show();
+            }
+
+            // Hide the view form
             View view = new View();
             view.Hide();
         }
