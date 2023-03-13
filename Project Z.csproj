@@ -49,42 +49,42 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="login.cs">
+    <Compile Include="Login\login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="login.Designer.cs">
+    <Compile Include="Login\login.Designer.cs">
       <DependentUpon>login.cs</DependentUpon>
     </Compile>
-    <Compile Include="registration.cs">
+    <Compile Include="Registration\registration.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="registration.Designer.cs">
+    <Compile Include="Registration\registration.Designer.cs">
       <DependentUpon>registration.cs</DependentUpon>
     </Compile>
-    <Compile Include="View.cs">
+    <Compile Include="View\View.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View.Designer.cs">
+    <Compile Include="View\View.Designer.cs">
       <DependentUpon>View.cs</DependentUpon>
     </Compile>
-    <Compile Include="fileViewerForm.cs">
+    <Compile Include="FileViewerForm\fileViewerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="fileViewerForm.Designer.cs">
+    <Compile Include="FileViewerForm\fileViewerForm.Designer.cs">
       <DependentUpon>fileViewerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="fileViewerForm.resx">
+    <EmbeddedResource Include="FileViewerForm\fileViewerForm.resx">
       <DependentUpon>fileViewerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="login.resx">
+    <EmbeddedResource Include="Login\login.resx">
       <DependentUpon>login.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="registration.resx">
+    <EmbeddedResource Include="Registration\registration.resx">
       <DependentUpon>registration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View.resx">
+    <EmbeddedResource Include="View\View.resx">
       <DependentUpon>View.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -144,5 +144,6 @@
   <ItemGroup>
     <None Include="Resources\logout%281%29.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace File_Security_System
+﻿namespace Project_Z
 {
     partial class fileViewerForm
     {

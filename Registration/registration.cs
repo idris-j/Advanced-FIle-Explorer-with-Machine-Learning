@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace File_Security_System
+namespace Project_Z
 {
     public partial class reg : Form
     {

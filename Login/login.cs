@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb; //for microsoft access db
 
-namespace File_Security_System
+namespace Project_Z
 {
     public partial class login : Form
     {

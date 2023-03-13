@@ -1,4 +1,4 @@
-﻿namespace File_Security_System
+﻿namespace Project_Z
 {
     partial class View
     {
@@ -149,7 +149,7 @@
             // 
             // button1
             // 
-            this.button1.BackgroundImage = global::File_Security_System.Properties.Resources.logout_1_;
+            this.button1.BackgroundImage = global::Project_Z.Properties.Resources.logout_1_;
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;

@@ -14,7 +14,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using AxWMPLib;
 using System.Diagnostics;
 
-namespace File_Security_System
+namespace Project_Z
 {
     public partial class fileViewerForm : Form
     {

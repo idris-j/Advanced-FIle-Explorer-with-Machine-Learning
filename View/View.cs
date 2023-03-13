@@ -15,7 +15,7 @@ using WMPLib;
 using AxWMPLib;
 using System.Windows.Shapes;
 
-namespace File_Security_System
+namespace Project_Z
 {
     public partial class View : Form
     {

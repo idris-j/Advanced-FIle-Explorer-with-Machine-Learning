@@ -1,4 +1,4 @@
-﻿namespace File_Security_System
+﻿namespace Project_Z
 {
     partial class reg
     {
@@ -178,7 +178,7 @@
             // 
             // button3
             // 
-            this.button3.BackgroundImage = global::File_Security_System.Properties.Resources.logout_1_;
+            this.button3.BackgroundImage = global::Project_Z.Properties.Resources.logout_1_;
             this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button3.FlatAppearance.BorderSize = 0;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;

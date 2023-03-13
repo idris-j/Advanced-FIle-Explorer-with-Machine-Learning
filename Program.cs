@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace File_Security_System
+namespace Project_Z
 {
     internal static class Program
     {
