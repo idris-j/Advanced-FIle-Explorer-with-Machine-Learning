@@ -102,6 +102,7 @@
             // filePathTextBox
             // 
             this.filePathTextBox.AcceptsReturn = true;
+            this.filePathTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.filePathTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.filePathTextBox.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.filePathTextBox.Location = new System.Drawing.Point(82, 4);
@@ -165,6 +166,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1054, 545);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.webBrowser1);

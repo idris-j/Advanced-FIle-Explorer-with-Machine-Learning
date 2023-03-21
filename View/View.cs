@@ -28,6 +28,7 @@ namespace Project_Z
         public View()
         {
             InitializeComponent();
+            //webBrowser1.Parent.BackColor = Color.DimGray;
             //listView1.Focus();
         }
 
@@ -323,7 +324,6 @@ namespace Project_Z
 
         private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-
         }
         private void button1_Click(object sender, EventArgs e)
         {
