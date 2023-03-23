@@ -39,7 +39,7 @@ namespace Project_Z
             loadFileAndDirectories();
         }
         public void loadFileDetails()
-        { 
+        {
             string tempFilePath = "";
             webBrowser1.Navigate("");
             FileAttributes fileAttr;
@@ -221,13 +221,13 @@ namespace Project_Z
             }
         }
 
-        public void loadDetailsAction()
-        {
-            //removeBackSlash();
-            //filePath = filePathTextBox.Text;
-            loadFileDetails();
-            //isFile = false;
-        }
+        //public void loadDetailsAction()
+        //{
+        //    //removeBackSlash();
+        //    //filePath = filePathTextBox.Text;
+        //    loadFileDetails();
+        //    //isFile = false;
+        //}
         public void loadButonAction() 
         {
             removeBackSlash();
@@ -302,7 +302,11 @@ namespace Project_Z
 
         private void listView1_MouseClick(object sender, MouseEventArgs e)
         {
-            loadDetailsAction();
+            fileNameLabel.Text = "...";
+            fileTypeLabel.Text = "...";
+
+            fileSizeLabel.Text = "...";
+            loadFileDetails();
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
