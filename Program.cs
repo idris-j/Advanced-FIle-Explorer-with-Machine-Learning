@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project_Z.Splash;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,11 @@ namespace Project_Z
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new View());
+            Application.Run(new splash() { Text = Application.ProductName });
+            //Application.Run(new View() { Text = Application.ProductName });
+            //Application.Run(new faceIDReg() { Text = Application.ProductName });
+            //Application.Run(new faceIDAuth() { Text = Application.ProductName });
         }
+
     }
 }

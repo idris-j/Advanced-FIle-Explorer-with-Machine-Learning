@@ -14,11 +14,18 @@ using System.Security.Cryptography.X509Certificates;
 using WMPLib;
 using AxWMPLib;
 using System.Windows.Shapes;
+using System.Threading;
+using System.Security.Cryptography;
+using System.Windows.Controls.Primitives;
+using System.Diagnostics;
+using static Project_Z.login;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Project_Z
 {
     public partial class View : Form
     {
+        
         //private string currentUser = Environment.UserName;
         //private string userRootFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), Environment.UserName);
         private string filePath = System.IO.Path.Combine("C:\\", "Users", Environment.UserName);
@@ -30,13 +37,27 @@ namespace Project_Z
             InitializeComponent();
             //webBrowser1.Parent.BackColor = Color.DimGray;
             //listView1.Focus();
+            this.Text = "File Explorer";
+            this.Icon = new Icon("../../dpabs-icon.ico");
+            userLoginLabel.Text = User.LoginName;
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             this.KeyPreview = true; //enable keypress events to be raised:
+            appNameLabel.Text = "DPABS EXPLORER";
             filePathTextBox.Text = filePath;
+            //login login = new login();
+            //string tempUsername = login.tempUserName;
+
+            //userNameLabel.Text = tempUsername;
             loadFileAndDirectories();
+        }
+
+        public void fileShredder(string fileToShred)
+        { 
+            
         }
         public void loadFileDetails()
         {
@@ -75,15 +96,6 @@ namespace Project_Z
                     string fileExtension = file.Extension.ToLower();
                     switch (fileExtension)
                     {
-                        //case ".mp4":
-                        //case ".avi":
-                        //case ".mkv":
-                        //    string videoPath = tempFilePath;
-                        //    string html = "<!DOCTYPE html><html><head></head><body>" +
-                        //                  $"<video width=\"100%\" height=\"100%\" controls><source src=\"{videoPath}\" type=\"video/mp4\"></video>" +
-                        //                  "</body></html>";
-                        //    webBrowser1.Navigate(html);
-                        //    break;
                         case ".png":
                         case ".jpg":
                         case ".txt":
@@ -110,10 +122,6 @@ namespace Project_Z
             }
 
         }
-        public void loadVideo()
-        {
-
-        }
         public void loadFileAndDirectories() 
         {
             DirectoryInfo fileList;
@@ -124,12 +132,65 @@ namespace Project_Z
                 if (isFile)
                 {
                     tempFilePath = filePath + "\\" + currentlySelectedItemName;
+
                     FileInfo fileDetails = new FileInfo(tempFilePath);
                     fileAttr = File.GetAttributes(tempFilePath);
                     FileInfo file = new FileInfo(tempFilePath);
                     string fileExtension = file.Extension.ToLower();
-                    var fileViewerForm = new fileViewerForm(tempFilePath);
-                    fileViewerForm.Show();
+
+                    string password = filePass.Text;
+                    if (password == "")
+                    {
+                        MessageBox.Show("Password field cannot be empty", "Encryption Process Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        filePass.Focus();
+                        return;
+                    }
+                    else
+                    {
+                        filePass.Clear();
+
+                        if (fileExtension == ".dpabs")
+                        {
+                            // Create a Stopwatch instance
+                            Stopwatch stopwatch = new Stopwatch();
+
+                            // Start the stopwatch
+                            stopwatch.Start();
+
+                            decryptFile(tempFilePath, password);
+
+                            // Stop the stopwatch
+                            stopwatch.Stop();
+
+                            // Get the elapsed time in milliseconds
+                            long elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
+
+                            //MessageBox.Show(elapsedMilliseconds.ToString());
+                            Console.WriteLine($"Decryption Processing time: {elapsedMilliseconds} ms.");
+                        }
+                        else
+                        {
+                            // Create a Stopwatch instance
+                            Stopwatch stopwatch = new Stopwatch();
+
+                            // Start the stopwatch
+                            stopwatch.Start();
+
+
+                            encryptFile(tempFilePath, password);
+
+                            // Stop the stopwatch
+                            stopwatch.Stop();
+
+                            // Get the elapsed time in milliseconds
+                            long elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
+
+                            //MessageBox.Show(elapsedMilliseconds.ToString());
+                            Console.WriteLine($"Encryption Processing time: {elapsedMilliseconds} ms.");
+
+                        }
+
+                    }
                     //switch (fileExtension)
                     //{
                     //    case ".mp4":
@@ -220,14 +281,97 @@ namespace Project_Z
             { 
             }
         }
+        public void SecurelyDeleteFile(string filePath)
+        {
+            try
+            {
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Write))
+                {
+                    // Overwrite file content with random data
+                    byte[] randomData = new byte[fileStream.Length];
+                    new Random().NextBytes(randomData);
+                    fileStream.Write(randomData, 0, randomData.Length);
+                }
 
-        //public void loadDetailsAction()
-        //{
-        //    //removeBackSlash();
-        //    //filePath = filePathTextBox.Text;
-        //    loadFileDetails();
-        //    //isFile = false;
-        //}
+                // Delete the file
+                File.Delete(filePath);
+
+                MessageBox.Show("Original file securely deleted.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error while securely deleting file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        byte[] salt = Encoding.UTF8.GetBytes("dpabs2023");
+        public void decryptFile(string fileToDecrypt, string password)
+        {
+            try
+            {
+                string decryptedFilePath = System.IO.Path.ChangeExtension(fileToDecrypt, null); // Remove the extension
+
+                using (Aes aesAlg = Aes.Create())
+                {
+                    Rfc2898DeriveBytes keyDerivationFunction = new Rfc2898DeriveBytes(password, salt);
+                    aesAlg.Key = keyDerivationFunction.GetBytes(aesAlg.KeySize / 8);
+                    aesAlg.IV = keyDerivationFunction.GetBytes(aesAlg.BlockSize / 8);
+
+                    using (FileStream encryptedFileStream = new FileStream(fileToDecrypt, FileMode.Open))
+                    using (FileStream decryptedFileStream = new FileStream(decryptedFilePath, FileMode.Create))
+                    using (CryptoStream cryptoStream = new CryptoStream(decryptedFileStream, aesAlg.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        encryptedFileStream.CopyTo(cryptoStream);
+                    }
+                }
+
+                MessageBox.Show("File decrypted successfully.");
+                SecurelyDeleteFile(fileToDecrypt);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        public void encryptFile(string fileToEncrypt, string password)
+        {
+            try
+            {
+                // Read the original file content
+                byte[] fileBytes = File.ReadAllBytes(fileToEncrypt);
+                using (Aes aesAlg = Aes.Create())
+                {
+                    aesAlg.KeySize = 256; // Set the key size to 256 bits
+
+                    // Derive key and IV from password and salt
+                    Rfc2898DeriveBytes keyDerivationFunction = new Rfc2898DeriveBytes(password, salt);
+                    aesAlg.Key = keyDerivationFunction.GetBytes(aesAlg.KeySize / 8);
+                    aesAlg.IV = keyDerivationFunction.GetBytes(aesAlg.BlockSize / 8);
+
+                    // Create a new memory stream to write encrypted data
+                    using (MemoryStream encryptedStream = new MemoryStream())
+                    {
+                        using (CryptoStream cryptoStream = new CryptoStream(encryptedStream, aesAlg.CreateEncryptor(), CryptoStreamMode.Write))
+                        {
+                            cryptoStream.Write(fileBytes, 0, fileBytes.Length);
+                            cryptoStream.FlushFinalBlock();
+                        }
+
+                        // Write encrypted data to the file with the specified extension
+                        string encryptedFilePath = System.IO.Path.ChangeExtension(fileToEncrypt, "dpabs");
+                        File.WriteAllBytes(encryptedFilePath, encryptedStream.ToArray());
+
+                        MessageBox.Show("File encrypted successfully.");
+                    }
+                    SecurelyDeleteFile(fileToEncrypt);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
         public void loadButonAction() 
         {
             removeBackSlash();
@@ -239,7 +383,23 @@ namespace Project_Z
                 process.StartInfo.WorkingDirectory = cmdDir;
                 process.Start();
             }
+
+            // Create a Stopwatch instance
+            Stopwatch stopwatch = new Stopwatch();
+
+            // Start the stopwatch
+            stopwatch.Start();
+
+
             loadFileAndDirectories();
+
+            // Stop the stopwatch
+            stopwatch.Stop();
+
+            // Get the elapsed time in milliseconds
+            long elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
+
+            Console.WriteLine($"Load Files Processing Time: {elapsedMilliseconds} ms.");
             isFile = false;
 
         }
@@ -331,29 +491,56 @@ namespace Project_Z
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            // Check if an instance of the login form is already open
-            login loginForm = Application.OpenForms.OfType<login>().FirstOrDefault();
-
-            if (loginForm != null)
-            {
-                // If the login form is already open, bring it to the front
-                loginForm.BringToFront();
-            }
-            else
-            {
-                // If the login form is not open, create a new instance and show it
-                loginForm = new login();
-                loginForm.Show();
-            }
-
-            // Hide the view form
-            View view = new View();
-            view.Hide();
+            Thread.Sleep(1000);
+            login login = new login();
+            this.Hide();
+            login.Show();
         }
 
         private void filePathTextBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fileNameLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void encrypt_btn_Click(object sender, EventArgs e)
+        {
+            loadButonAction();
+        }
+        
+        private void chat_btn_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("DPABS Secure Messaging App is currently under development.\nOur existing customers would be the first to know once we launch.\n\nThank you!","Coming soon");
+        }
+
+        private void shred_btn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fileTypeLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void userLoginLabel_Click(object sender, EventArgs e)
+        {
+            faceIDReg Face = new faceIDReg();
+            Face.Show();
         }
     }
 }

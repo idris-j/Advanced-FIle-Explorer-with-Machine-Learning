@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.OleDb; //for microsoft access db
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Security.Cryptography;
 
 namespace Project_Z
 {
@@ -16,6 +19,9 @@ namespace Project_Z
         public reg()
         {
             InitializeComponent();
+
+            this.Text = "Register";
+            this.Icon = new Icon("../../dpabs-icon.ico");
         }
 
         //OleDbConnection conn = new OleDbConnection("Provider=Microsoft.Jet.OLED")
@@ -35,27 +41,48 @@ namespace Project_Z
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string username = textBoxUsername.Text;
+            string password = textBoxPass.Text;
+            string confirmPassword = textBoxComPass.Text;
             if (textBoxUsername.Text == "" & textBoxPass.Text == "" & textBoxComPass.Text == "")
             {
                 MessageBox.Show("Username and Password fields are empty", "Registration Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            else if (textBoxPass.Text == textBoxComPass.Text)
+            else if (password == confirmPassword)
             {
-                conn.Open(); // open connection
-                string username = textBoxUsername.Text;
-                string password = textBoxPass.Text;
-                string register = "INSERT INTO user_tb (username, password) VALUES (@username, @password)";
-                command = new OleDbCommand(register, conn);
-                command.Parameters.AddWithValue("@username", textBoxUsername.Text);
-                command.Parameters.AddWithValue("@password", textBoxPass.Text);
-                command.ExecuteNonQuery();
-                conn.Close();
-                textBoxPass.Text = "";
-                textBoxComPass.Text = "";
-                textBoxUsername.Text = "";
+                using (SHA256 sha256 = SHA256.Create())
+                {
+                    byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                    byte[] hashedBytes = sha256.ComputeHash(passwordBytes);
+                    string hashedPassword = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
 
-                MessageBox.Show("Success", "Registration Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    try
+                    {
+                        conn.Open(); // Open connection
+
+                        string registerQuery = "INSERT INTO users_tbl ([username], [password]) VALUES (@username, @password)";
+                        command = new OleDbCommand(registerQuery, conn);
+                        command.Parameters.AddWithValue("@username", username);
+                        command.Parameters.AddWithValue("@password", hashedPassword);
+                        command.ExecuteNonQuery();
+
+                        conn.Close();
+
+                        textBoxPass.Text = "";
+                        textBoxComPass.Text = "";
+                        textBoxUsername.Text = "";
+
+                        MessageBox.Show("Registration successful", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        login login = new login();
+                        login.Show();
+                        this.Hide();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
             else
             {
@@ -91,6 +118,11 @@ namespace Project_Z
         private void button3_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void textBoxPass_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

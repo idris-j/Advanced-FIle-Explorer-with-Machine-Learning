@@ -40,6 +40,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -49,7 +50,7 @@
             this.label1.Font = new System.Drawing.Font("MS UI Gothic", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(28, 68);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(155, 27);
+            this.label1.Size = new System.Drawing.Size(194, 34);
             this.label1.TabIndex = 0;
             this.label1.Text = "Get Started";
             // 
@@ -58,7 +59,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(30, 111);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 15);
+            this.label2.Size = new System.Drawing.Size(93, 20);
             this.label2.TabIndex = 1;
             this.label2.Text = "Username";
             // 
@@ -78,7 +79,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(30, 187);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 15);
+            this.label3.Size = new System.Drawing.Size(90, 20);
             this.label3.TabIndex = 3;
             this.label3.Text = "Password";
             // 
@@ -93,13 +94,14 @@
             this.textBoxPass.PasswordChar = '•';
             this.textBoxPass.Size = new System.Drawing.Size(218, 28);
             this.textBoxPass.TabIndex = 4;
+            this.textBoxPass.TextChanged += new System.EventHandler(this.textBoxPass_TextChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(32, 275);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(126, 15);
+            this.label4.Size = new System.Drawing.Size(160, 20);
             this.label4.TabIndex = 5;
             this.label4.Text = "Confirm Password";
             // 
@@ -122,7 +124,7 @@
             this.checkBoxShowPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBoxShowPass.Location = new System.Drawing.Point(34, 344);
             this.checkBoxShowPass.Name = "checkBoxShowPass";
-            this.checkBoxShowPass.Size = new System.Drawing.Size(126, 19);
+            this.checkBoxShowPass.Size = new System.Drawing.Size(157, 24);
             this.checkBoxShowPass.TabIndex = 7;
             this.checkBoxShowPass.Text = "Show Password";
             this.checkBoxShowPass.UseVisualStyleBackColor = true;
@@ -130,7 +132,8 @@
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(169)))), ((int)(((byte)(235)))));
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(42)))), ((int)(((byte)(51)))));
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.ForeColor = System.Drawing.Color.White;
@@ -146,7 +149,7 @@
             // 
             this.button2.BackColor = System.Drawing.Color.White;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(169)))), ((int)(((byte)(235)))));
+            this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(42)))), ((int)(((byte)(51)))));
             this.button2.Location = new System.Drawing.Point(34, 425);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(216, 35);
@@ -158,9 +161,10 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(58, 470);
+            this.label6.Font = new System.Drawing.Font("Arial Rounded MT Bold", 7F);
+            this.label6.Location = new System.Drawing.Point(75, 470);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(169, 15);
+            this.label6.Size = new System.Drawing.Size(154, 14);
             this.label6.TabIndex = 11;
             this.label6.Text = "Already Have an Account";
             // 
@@ -168,17 +172,28 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(169)))), ((int)(((byte)(235)))));
-            this.label7.Location = new System.Drawing.Point(87, 491);
+            this.label7.Font = new System.Drawing.Font("Arial Rounded MT Bold", 7F);
+            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(42)))), ((int)(((byte)(51)))));
+            this.label7.Location = new System.Drawing.Point(105, 490);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(94, 15);
+            this.label7.Size = new System.Drawing.Size(86, 14);
             this.label7.TabIndex = 12;
             this.label7.Text = "Back to Login";
             this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(105, 13);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(97, 27);
+            this.label5.TabIndex = 27;
+            this.label5.Text = "DPABS";
+            // 
             // button3
             // 
-            this.button3.BackgroundImage = global::Project_Z.Properties.Resources.logout_1_;
+            this.button3.BackgroundImage = global::Dpabs_FE.Properties.Resources.logout_1_;
             this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button3.FlatAppearance.BorderSize = 0;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -192,9 +207,10 @@
             // 
             // reg
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(285, 544);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -214,7 +230,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "reg";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Registration";
             this.Load += new System.EventHandler(this.reg_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -236,5 +252,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label5;
     }
 }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Project_Z.Properties {
+namespace Dpabs_FE.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -20,6 +20,40 @@ namespace Project_Z.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\\users_db.mdb;Jet OL" +
+            "EDB:Database Password=2023")]
+        public string users_dbConnectionString {
+            get {
+                return ((string)(this["users_dbConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool faceIDToggle {
+            get {
+                return ((bool)(this["faceIDToggle"]));
+            }
+            set {
+                this["faceIDToggle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::Emgu.CV.UI.ImageBox registeredFace {
+            get {
+                return ((global::Emgu.CV.UI.ImageBox)(this["registeredFace"]));
+            }
+            set {
+                this["registeredFace"] = value;
             }
         }
     }
